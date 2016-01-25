@@ -1,13 +1,12 @@
 #pragma once
 
 #include "ofTypes.h"
-#include "ofxTweenLite.h"
 #include "ofxTweenType.h"
 
 namespace ofx { namespace keyframetween {
 
 	template<typename Value>
-	class Keyframe : public std::map<float, pair<ofEaseFunction,Value>>
+	class Keyframe : public std::map<float, std::pair<ofEaseFunction,Value>>
 	{
 	public:
 		Value getValue(float key) {

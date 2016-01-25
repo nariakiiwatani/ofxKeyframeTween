@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "ofxTweenLite.h"
 
 namespace ofx { namespace keyframetween {
 	

@@ -9,7 +9,7 @@ namespace ofx { namespace keyframetween {
 	class Keyframe : public std::map<float, std::pair<ofEaseFunction,Value>>
 	{
 	public:
-		Value getValue(float key) {
+		Value getValue(float key) const {
 			if(this->empty()) return Value();
 			auto it0 = this->lower_bound(key);
 			if(it0 == this->end()) return this->begin()->second.second;

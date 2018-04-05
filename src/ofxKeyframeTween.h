@@ -12,7 +12,7 @@ namespace ofx { namespace keyframetween {
 		Value getValue(float key) const {
 			if(this->empty()) return Value();
 			auto it0 = this->lower_bound(key);
-			if(it0 == this->end()) return this->begin()->second.second;
+			if(it0 == this->end()) return (--it0)->second.second;
 			if(it0 == this->begin()) return it0->second.second;
 			auto it1 = it0--;
 			if(it0->second.first == -1) return it0->second.second;

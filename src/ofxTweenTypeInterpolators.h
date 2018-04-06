@@ -191,12 +191,12 @@ return ret; \
 		}
 	};
 	
-#pragma mark decide tipical functions
+#pragma mark decide typical functions
 	
-	template<typename Type> struct Tipical { using type = Numeric<Type>; };
-	template<> struct Tipical<ofQuaternion> { using type = QuaternionSpherical; };
-	template<> struct Tipical<ofMatrix4x4> { using type = Matrix4x4TRS; };
-	template<> struct Tipical<ofNode> { using type = Node; };
-	template<> struct Tipical<ofCamera> { using type = Camera; };
-	template<typename PixelType> struct Tipical<ofColor_<PixelType>> { using type = HSBColor<HueIPNear<ofColor_<PixelType>>>; };
+	template<typename Type> struct Typical { using type = Numeric<Type>; };
+	template<> struct Typical<ofQuaternion> { using type = QuaternionSpherical; };
+	template<> struct Typical<ofMatrix4x4> { using type = Matrix4x4TRS; };
+	template<> struct Typical<ofNode> { using type = Node; };
+	template<> struct Typical<ofCamera> { using type = Camera; };
+	template<typename PixelType> struct Typical<ofColor_<PixelType>> { using type = HSBColor<HueIPNear<ofColor_<PixelType>>>; };
 }}}

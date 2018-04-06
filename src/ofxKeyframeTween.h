@@ -24,5 +24,5 @@ namespace ofx { namespace tweentype {
 	};
 	
 }}
-template<typename Value, typename Interpolator=typename ofx::tweentype::interpolate::Tipical<Value>::type>
+template<typename Value, typename Interpolator=typename ofx::tweentype::interpolate::Typical<Value>::type>
 using ofxKeyframeTween = ofx::tweentype::Keyframe<Value, Interpolator>;

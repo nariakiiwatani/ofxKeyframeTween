@@ -24,34 +24,32 @@ namespace ofx { namespace tweentype { namespace interpolate {
 				return ret;
 			}
 		};
-		struct Orbit {
-			struct Param : public node::Orbit::Param {
-				Param(){};
-				Param(node::Orbit::Param &&p)
-				:node::Orbit::Param(p)
-				{}
-				Param(const ofCamera &camera, ofVec3f lookat)
-				:node::Orbit::Param(camera, lookat)
-				,fov(camera.getFov())
-				,aspect_ratio(camera.getAspectRatio())
-				,near_clip(camera.getNearClip())
-				,far_clip(camera.getFarClip())
-				,lens_offset(camera.getLensOffset())
-				{}
-				float fov, near_clip, far_clip, aspect_ratio;
-				ofVec2f lens_offset;
-				void apply(ofCamera &camera) {
-					node::Orbit::Param::apply(camera);
-					camera.setFov(fov);
-					camera.setAspectRatio(aspect_ratio);
-					camera.setLensOffset(lens_offset);
-					camera.setNearClip(near_clip);
-					camera.setFarClip(far_clip);
-				}
-			};
+		struct Orbit : public node::Orbit {
+			Orbit(){};
+			Orbit(node::Orbit &&o)
+			:node::Orbit(o)
+			{}
+			Orbit(const ofCamera &camera, ofVec3f lookat)
+			:node::Orbit(camera, lookat)
+			,fov(camera.getFov())
+			,aspect_ratio(camera.getAspectRatio())
+			,near_clip(camera.getNearClip())
+			,far_clip(camera.getFarClip())
+			,lens_offset(camera.getLensOffset())
+			{}
+			float fov, near_clip, far_clip, aspect_ratio;
+			ofVec2f lens_offset;
+			void apply(ofCamera &camera) {
+				node::Orbit::apply(camera);
+				camera.setFov(fov);
+				camera.setAspectRatio(aspect_ratio);
+				camera.setLensOffset(lens_offset);
+				camera.setNearClip(near_clip);
+				camera.setFarClip(far_clip);
+			}
 			static int dim() { return node::Orbit::dim()+5; }
-			static inline Param getInterpolated(float k, float k0, float k1, const Param &v0, const Param &v1, std::vector<ofEaseFunction> ease) {
-				Param ret = node::Orbit::getInterpolated(k, k0, k1, v0, v1, ease);
+			static inline Orbit getInterpolated(float k, float k0, float k1, const Orbit &v0, const Orbit &v1, std::vector<ofEaseFunction> ease) {
+				Orbit ret = node::Orbit::getInterpolated(k, k0, k1, v0, v1, ease);
 				ret.fov = Numeric<float>::getInterpolated(k, k0, k1, v0.fov, v1.fov, {ease[node::Orbit::dim()+0]});
 				ret.aspect_ratio = Numeric<float>::getInterpolated(k, k0, k1, v0.aspect_ratio, v1.aspect_ratio, {ease[node::Orbit::dim()+1]});
 				ret.lens_offset = Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.lens_offset, v1.lens_offset, {ease[node::Orbit::dim()+2],ease[node::Orbit::dim()+2]});
@@ -62,6 +60,6 @@ namespace ofx { namespace tweentype { namespace interpolate {
 		};
 	}
 
-	template<> struct Typical<camera::Orbit::Param> { using type = camera::Orbit; };
+	template<> struct Typical<camera::Orbit> { using type = camera::Orbit; };
 	template<> struct Typical<ofCamera> { using type = camera::Node<node::TRS>; };
 }}}

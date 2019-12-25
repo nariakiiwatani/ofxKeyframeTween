@@ -26,5 +26,5 @@ public:
 private:
 	ofxKeyframeTween<ofQuaternion> rot_;
 	ofxKeyframeTween<ofColor, ofx::tweentype::interpolate::HSBColor<ofx::tweentype::interpolate::HueIPFar<ofColor>>> color_;
-	ofxKeyframeTween<ofx::tweentype::interpolate::camera::Orbit::Param> camera_;
+	ofxKeyframeTween<ofx::tweentype::interpolate::camera::Orbit> camera_;
 };

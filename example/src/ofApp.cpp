@@ -18,27 +18,34 @@ void ofApp::setup(){
 	color_.addKeyFrame(5, ofColor::white, OF_EASE_CUBIC_IN);
 	
 	ofCamera camera;
+	ofVec3f lookat;
 	camera.setPosition(ofVec3f(0,0,100));
-	camera.lookAt(ofVec3f(0,0,0));
+	lookat.set(100,0,0);
+	camera.lookAt(lookat);
 	camera.setFov(60);
-	camera.setAspectRatio(4/3.f);
-	camera_.addKeyFrame(0, camera, OF_EASE_CUBIC_INOUT);
+//	camera.setAspectRatio(4/3.f);
+	camera_.addKeyFrame(0, {camera, lookat}, OF_EASE_CUBIC_INOUT);
 	camera.setFov(120);
-	camera_.addKeyFrame(1, camera, OF_EASE_CUBIC_IN);
+	camera_.addKeyFrame(1, {camera, lookat}, OF_EASE_CUBIC_IN);
 	camera.setPosition(ofVec3f(100,500,-200));
-	camera.lookAt(ofVec3f(0,0,0));
-	camera_.addKeyFrame(2, camera, OF_EASE_CUBIC_IN);
+	lookat.set(0,100,0);
+	camera.lookAt(lookat);
+	camera_.addKeyFrame(2, {camera, lookat}, OF_EASE_CUBIC_IN);
 	camera.setPosition(ofVec3f(-100,50,200));
-	camera.lookAt(ofVec3f(0,0,0));
-	camera_.addKeyFrame(3, camera, OF_EASE_SINE_INOUT);
-	camera.setAspectRatio(16/9.f);
-	camera.setLensOffset(ofVec2f(0.5f,0));
+	lookat.set(-100,0,0);
+	camera.lookAt(lookat);
+	camera_.addKeyFrame(3, {camera, lookat}, OF_EASE_SINE_INOUT);
+//	camera.setAspectRatio(16/9.f);
+//	camera.setLensOffset(ofVec2f(0.5f,0));
+	lookat.set(0,-100,0);
+	camera.lookAt(lookat);
 	camera.setFov(60);
-	camera_.addKeyFrame(4, camera, OF_EASE_CUBIC_IN);
+	camera_.addKeyFrame(4, {camera, lookat}, OF_EASE_CUBIC_IN);
 	camera.setPosition(ofVec3f(0,0,100));
-	camera.lookAt(ofVec3f(0,0,0));
-	camera.setLensOffset(ofVec2f(0,0));
-	camera_.addKeyFrame(5, camera, OF_EASE_BOUNCE_OUT);
+	lookat.set(100,0,0);
+	camera.lookAt(lookat);
+//	camera.setLensOffset(ofVec2f(0,0));
+	camera_.addKeyFrame(5, {camera, lookat}, OF_EASE_BOUNCE_OUT);
 }
 
 //--------------------------------------------------------------
@@ -50,7 +57,8 @@ void ofApp::update(){
 void ofApp::draw(){
 	float timef = ofGetElapsedTimef();
 	timef = ofWrap(timef,0,5);
-	ofCamera camera = camera_.getValue(timef);
+	ofCamera camera;
+	camera_.getValue(timef).apply(camera);
 	camera.begin();
 	ofPushMatrix();
 	float d,x,y,z;

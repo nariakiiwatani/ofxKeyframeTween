@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxKeyframeTween.h"
 #include "ofxTweenTypeInterpolateColor.h"
+#include "ofxTweenTypeInterpolateNode.h"
 
 class ofApp : public ofBaseApp{
 	
@@ -25,5 +26,5 @@ public:
 private:
 	ofxKeyframeTween<ofQuaternion> rot_;
 	ofxKeyframeTween<ofColor, ofx::tweentype::interpolate::HSBColor<ofx::tweentype::interpolate::HueIPFar<ofColor>>> color_;
-	ofxKeyframeTween<ofCamera> camera_;
+	ofxKeyframeTween<ofx::tweentype::interpolate::camera::Orbit::Param> camera_;
 };

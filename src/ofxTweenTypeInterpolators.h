@@ -106,9 +106,13 @@ return ret; \
 	struct Node {
 		static inline int dim() { return 3; }
 		static inline ofNode getInterpolated(float k, float k0, float k1, const ofNode &v0, const ofNode &v1, std::vector<ofEaseFunction> ease) {
-			ofMatrix4x4 mat = Matrix4x4TRS::getInterpolated(k, k0, k1, v0.getGlobalTransformMatrix(), v1.getGlobalTransformMatrix(), ease);
+			auto t = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.getGlobalPosition(), v1.getGlobalPosition(), {ease[0]});
+			auto r = QuaternionSpherical::getInterpolated(k, k0, k1, v0.getGlobalOrientation(), v1.getGlobalOrientation(), {ease[1]});
+			auto s = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.getGlobalScale(), v1.getGlobalScale(), {ease[2]});
 			ofNode ret;
-			ret.setTransformMatrix(mat);
+			ret.setPosition(t);
+			ret.setOrientation(r);
+			ret.setScale(s);
 			return ret;
 		}
 	};
@@ -118,8 +122,11 @@ return ret; \
 	struct Camera {
 		static inline int dim() { return 9; }
 		static inline ofCamera getInterpolated(float k, float k0, float k1, const ofCamera &v0, const ofCamera &v1, std::vector<ofEaseFunction> ease) {
+			ofNode node = Node::getInterpolated(k, k0, k1, v0, v1, ease);
 			ofCamera ret;
-			ret.setTransformMatrix(Matrix4x4TRS::getInterpolated(k, k0, k1, v0.getGlobalTransformMatrix(), v1.getGlobalTransformMatrix(), {ease[0],ease[1],ease[2]}));
+			ret.setPosition(node.getPosition());
+			ret.setOrientation(node.getOrientationQuat());
+			ret.setScale(node.getScale());
 			ret.setFov(Numeric<float>::getInterpolated(k, k0, k1, v0.getFov(), v1.getFov(), {ease[3]}));
 			ret.setAspectRatio(Numeric<float>::getInterpolated(k, k0, k1, v0.getAspectRatio(), v1.getAspectRatio(), {ease[4]}));
 			ret.setLensOffset(Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.getLensOffset(), v1.getLensOffset(), {ease[5],ease[6]}));

@@ -1,13 +1,6 @@
-//
-//  ofxTweenType.h
-//
-//  Created by Iwatani Nariaki on 2016/01/22.
-//
-//
-
 #pragma once
 
-#include "ofxTweenTypeInterpolators.h"
+#include "ofxTweenTypeInterpolation.h"
 
 template<typename Type, typename Interpolator=typename ofx::tweentype::interpolate::Typical<Type>::type>
 inline Type ofxTweenType(float k, float k0, float k1, const Type &v0, const Type &v1, ofEaseFunction ease)

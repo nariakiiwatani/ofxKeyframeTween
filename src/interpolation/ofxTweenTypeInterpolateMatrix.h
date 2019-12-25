@@ -24,5 +24,4 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			return ret;
 		}
 	};
-	template<> struct Typical<ofMatrix4x4> { using type = Matrix4x4TRS; };
 }}}

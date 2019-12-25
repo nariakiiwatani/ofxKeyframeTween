@@ -5,7 +5,6 @@
 
 namespace ofx { namespace tweentype { namespace interpolate {
 
-	
 	namespace camera {
 		template<typename NodeIP>
 		struct Node {
@@ -29,13 +28,20 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			Orbit(node::Orbit &&o)
 			:node::Orbit(o)
 			{}
+			Orbit(node::Orbit &&o, float fov, float near_clip, float far_clip, float aspect_ratio, ofVec2f lens_offset)
+			:node::Orbit(o)
+			,fov(fov),near_clip(near_clip),far_clip(far_clip),aspect_ratio(aspect_ratio),lens_offset(lens_offset)
+			{}
 			Orbit(const ofCamera &camera, ofVec3f lookat)
-			:node::Orbit(camera, lookat)
-			,fov(camera.getFov())
-			,aspect_ratio(camera.getAspectRatio())
-			,near_clip(camera.getNearClip())
-			,far_clip(camera.getFarClip())
-			,lens_offset(camera.getLensOffset())
+			:Orbit(node::Orbit(camera, lookat)
+				   ,camera.getFov()
+				   ,camera.getNearClip()
+				   ,camera.getFarClip()
+				   ,camera.getAspectRatio()
+				   ,camera.getLensOffset())
+			{}
+			Orbit(const ofCamera &camera, float distance)
+			:Orbit(camera, camera.getGlobalPosition()+camera.getLookAtDir()*distance)
 			{}
 			float fov, near_clip, far_clip, aspect_ratio;
 			ofVec2f lens_offset;
@@ -59,7 +65,4 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			}
 		};
 	}
-
-	template<> struct Typical<camera::Orbit> { using type = camera::Orbit; };
-	template<> struct Typical<ofCamera> { using type = camera::Node<node::TRS>; };
 }}}

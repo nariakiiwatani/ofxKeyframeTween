@@ -63,6 +63,4 @@ namespace ofx { namespace tweentype { namespace interpolate {
 		}
 	};
 	
-#pragma mark decide typical functions
-	template<typename PixelType> struct Typical<ofColor_<PixelType>> { using type = HSBColor<HueIPNear<ofColor_<PixelType>>>; };
 }}}

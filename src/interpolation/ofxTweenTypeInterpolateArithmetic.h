@@ -34,5 +34,4 @@ return ofxTweenLite::tween(v0, v1, ofMap(k,k0,k1,0,1), ease[0]);\
 	IMPL_ARITH(double)
 #undef IMPL_ARITH
 	
-	template<typename Type> struct Typical { using type = Numeric<Type>; };
 }}}

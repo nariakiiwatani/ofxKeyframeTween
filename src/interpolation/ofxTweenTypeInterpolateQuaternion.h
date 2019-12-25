@@ -12,6 +12,4 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			return ret;
 		}
 	};
-	
-	template<> struct Typical<ofQuaternion> { using type = QuaternionSpherical; };
 }}}

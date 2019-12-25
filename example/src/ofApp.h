@@ -2,8 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxKeyframeTween.h"
-#include "ofxTweenTypeInterpolateColor.h"
-#include "ofxTweenTypeInterpolateNode.h"
+#include "ofxTweenTypeInterpolation.h"
 
 class ofApp : public ofBaseApp{
 	

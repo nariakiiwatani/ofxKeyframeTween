@@ -1,12 +1,12 @@
 #pragma once
 
 #include "ofxTweenTypeInterpolation.h"
+#include "ofxKeyframeTweenUtils.h"
 
 template<typename Type, typename Interpolator=typename ofx::tweentype::interpolate::Typical<Type>::type>
 inline Type ofxTweenType(float k, float k0, float k1, const Type &v0, const Type &v1, ofEaseFunction ease)
 {
-	std::vector<ofEaseFunction> eases(Interpolator::dim(), ease);
-	return ofxTweenType<Type, Interpolator>(k,k0,k1,v0,v1,eases);
+	return ofxTweenType<Type, Interpolator>(k,k0,k1,v0,v1,ofx::tweentype::utils::makeVectorFor<Interpolator>(ease));
 }
 
 template<typename Type, typename Interpolator=typename ofx::tweentype::interpolate::Typical<Type>::type>

@@ -13,9 +13,9 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			ofVec3f t,s; ofQuaternion r;
 			v0.decompose(t0, r0, s0, sr0);
 			v1.decompose(t1, r1, s1, sr1);
-			t = Numeric<ofVec3f>::getInterpolated(k, k0, k1, t0, t1, {ease[0]});
-			r = QuaternionSpherical::getInterpolated(k, k0, k1, r0, r1, {ease[1]});
-			s = Numeric<ofVec3f>::getInterpolated(k, k0, k1, s0, s1, {ease[2]});
+			t = Numeric<ofVec3f>::getInterpolated(k, k0, k1, t0, t1, {ease[0],ease[0],ease[0]});
+			r = QuaternionSpherical::getInterpolated(k, k0, k1, r0, r1, {ease[1],ease[1],ease[1],ease[1]});
+			s = Numeric<ofVec3f>::getInterpolated(k, k0, k1, s0, s1, {ease[2],ease[2],ease[2]});
 			ofMatrix4x4 ret;
 			ret.makeIdentityMatrix();
 			ret.scale(s);

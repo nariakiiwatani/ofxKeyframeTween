@@ -9,9 +9,9 @@ namespace ofx { namespace tweentype { namespace interpolate {
 		struct TRS {
 			static inline int dim() { return 3; }
 			static inline ofNode getInterpolated(float k, float k0, float k1, const ofNode &v0, const ofNode &v1, std::vector<ofEaseFunction> ease) {
-				auto t = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.getGlobalPosition(), v1.getGlobalPosition(), {ease[0]});
+				auto t = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.getGlobalPosition(), v1.getGlobalPosition(), {ease[0],ease[0],ease[0]});
 				auto r = QuaternionSpherical::getInterpolated(k, k0, k1, v0.getGlobalOrientation(), v1.getGlobalOrientation(), {ease[1]});
-				auto s = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.getGlobalScale(), v1.getGlobalScale(), {ease[2]});
+				auto s = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.getGlobalScale(), v1.getGlobalScale(), {ease[2],ease[2],ease[2]});
 				ofNode ret;
 				ret.setPosition(t);
 				ret.setOrientation(r);
@@ -51,10 +51,10 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			}
 			static inline int dim() { return 3; }
 			static inline Orbit getInterpolated(float k, float k0, float k1, const Orbit &v0, const Orbit &v1, std::vector<ofEaseFunction> ease) {
-				auto lookat = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.lookat, v1.lookat, {ease[0]});
+				auto lookat = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.lookat, v1.lookat, {ease[0],ease[0],ease[0]});
 				auto distance = Numeric<float>::getInterpolated(k, k0, k1, v0.distance, v1.distance, {ease[0]});
 				auto r = QuaternionSpherical::getInterpolated(k, k0, k1, v0.orientation, v1.orientation, {ease[1]});
-				auto s = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.scale, v1.scale, {ease[2]});
+				auto s = Numeric<ofVec3f>::getInterpolated(k, k0, k1, v0.scale, v1.scale, {ease[2],ease[2],ease[2]});
 				auto t = lookat + r*ofVec3f(0,0,distance);
 				return {t,r,s,lookat};
 			}

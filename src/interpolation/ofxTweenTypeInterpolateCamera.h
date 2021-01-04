@@ -20,6 +20,7 @@ namespace ofx { namespace tweentype { namespace interpolate {
 				ret.setLensOffset(Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.getLensOffset(), v1.getLensOffset(), {ease[NodeIP::dim()+2],ease[NodeIP::dim()+2]}));
 				ret.setNearClip(Numeric<float>::getInterpolated(k, k0, k1, v0.getNearClip(), v1.getNearClip(), {ease[NodeIP::dim()+3]}));
 				ret.setFarClip(Numeric<float>::getInterpolated(k, k0, k1, v0.getFarClip(), v1.getFarClip(), {ease[NodeIP::dim()+4]}));
+				Numeric<bool>::getInterpolated(k, k0, k1, v0.getOrtho(), v1.getOrtho(), {ease[NodeIP::dim()+5]}) ? ret.enableOrtho() : ret.disableOrtho();
 				return ret;
 			}
 		};
@@ -28,9 +29,9 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			Orbit(node::Orbit &&o)
 			:node::Orbit(o)
 			{}
-			Orbit(node::Orbit &&o, float fov, float near_clip, float far_clip, float aspect_ratio, ofVec2f lens_offset)
+			Orbit(node::Orbit &&o, float fov, float near_clip, float far_clip, float aspect_ratio, ofVec2f lens_offset, bool is_ortho)
 			:node::Orbit(o)
-			,fov(fov),near_clip(near_clip),far_clip(far_clip),aspect_ratio(aspect_ratio),lens_offset(lens_offset)
+			,fov(fov),near_clip(near_clip),far_clip(far_clip),aspect_ratio(aspect_ratio),lens_offset(lens_offset),is_ortho(is_ortho)
 			{}
 			Orbit(const ofCamera &camera, ofVec3f lookat)
 			:Orbit(node::Orbit(camera, lookat)
@@ -38,22 +39,26 @@ namespace ofx { namespace tweentype { namespace interpolate {
 				   ,camera.getNearClip()
 				   ,camera.getFarClip()
 				   ,camera.getAspectRatio()
-				   ,camera.getLensOffset())
+				   ,camera.getLensOffset()
+				   ,camera.getOrtho()
+				   )
 			{}
 			Orbit(const ofCamera &camera, float distance)
 			:Orbit(camera, camera.getGlobalPosition()+camera.getLookAtDir()*distance)
 			{}
 			float fov, near_clip, far_clip, aspect_ratio;
 			ofVec2f lens_offset;
+			bool is_ortho;
 			void apply(ofCamera &camera) {
 				node::Orbit::apply(camera);
+				is_ortho ? camera.enableOrtho() : camera.disableOrtho();
 				camera.setFov(fov);
 				camera.setAspectRatio(aspect_ratio);
 				camera.setLensOffset(lens_offset);
 				camera.setNearClip(near_clip);
 				camera.setFarClip(far_clip);
 			}
-			static int dim() { return node::Orbit::dim()+5; }
+			static int dim() { return node::Orbit::dim()+6; }
 			static inline Orbit getInterpolated(float k, float k0, float k1, const Orbit &v0, const Orbit &v1, std::vector<ofEaseFunction> ease) {
 				Orbit ret = node::Orbit::getInterpolated(k, k0, k1, v0, v1, ease);
 				ret.fov = Numeric<float>::getInterpolated(k, k0, k1, v0.fov, v1.fov, {ease[node::Orbit::dim()+0]});
@@ -61,6 +66,7 @@ namespace ofx { namespace tweentype { namespace interpolate {
 				ret.lens_offset = Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.lens_offset, v1.lens_offset, {ease[node::Orbit::dim()+2],ease[node::Orbit::dim()+2]});
 				ret.near_clip = Numeric<float>::getInterpolated(k, k0, k1, v0.near_clip, v1.near_clip, {ease[node::Orbit::dim()+3]});
 				ret.far_clip = Numeric<float>::getInterpolated(k, k0, k1, v0.far_clip, v1.far_clip, {ease[node::Orbit::dim()+4]});
+				ret.is_ortho = Numeric<bool>::getInterpolated(k, k0, k1, v0.is_ortho, v1.is_ortho, {ease[node::Orbit::dim()+5]});
 				return ret;
 			}
 		};

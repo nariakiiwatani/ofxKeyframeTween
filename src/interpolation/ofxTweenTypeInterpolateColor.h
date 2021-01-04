@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofxTweenTypeInterpolateArithmetic.h"
+#include "ofxKeyframeTweenUtils.h"
 
 namespace ofx { namespace tweentype { namespace interpolate {
 	template<typename HueIP = Numeric<float>>
@@ -11,10 +12,10 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			float h0,s0,b0,h1,s1,b1,h,s,b,a;
 			v0.getHsb(h0,s0,b0);
 			v1.getHsb(h1,s1,b1);
-			h = HueIP::getInterpolated(k, k0, k1, h0, h1, {ease[0]});
-			s = Numeric<float>::getInterpolated(k, k0, k1, s0, s1, {ease[1]});
-			b = Numeric<float>::getInterpolated(k, k0, k1, b0, b1, {ease[2]});
-			a = Numeric<float>::getInterpolated(k, k0, k1, v0.a, v1.a, {ease[3]});
+			h = HueIP::getInterpolated(k, k0, k1, h0, h1, utils::makeVectorFor<HueIP>(ease[0]));
+			s = Numeric<float>::getInterpolated(k, k0, k1, s0, s1, utils::makeVectorFor<Numeric<float>>(ease[1]));
+			b = Numeric<float>::getInterpolated(k, k0, k1, b0, b1, utils::makeVectorFor<Numeric<float>>(ease[2]));
+			a = Numeric<float>::getInterpolated(k, k0, k1, v0.a, v1.a, utils::makeVectorFor<Numeric<float>>(ease[3]));
 			return ColorType::fromHsb(h,s,b,a);
 		}
 	};
@@ -28,7 +29,7 @@ namespace ofx { namespace tweentype { namespace interpolate {
 				if(sub > 0) h0 += ColorType::limit();
 				else h1 += ColorType::limit();
 			}
-			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, {ease[0]}), 0, ColorType::limit());
+			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, utils::makeVectorFor<Numeric<float>>(ease[0])), 0, ColorType::limit());
 		}
 	};
 	template<typename ColorType>
@@ -41,7 +42,7 @@ namespace ofx { namespace tweentype { namespace interpolate {
 				if(sub > 0) h0 += ColorType::limit();
 				else h1 += ColorType::limit();
 			}
-			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, {ease[0]}), 0, ColorType::limit());
+			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, utils::makeVectorFor<Numeric<float>>(ease[0])), 0, ColorType::limit());
 		}
 	};
 	template<typename ColorType>
@@ -50,7 +51,7 @@ namespace ofx { namespace tweentype { namespace interpolate {
 		static inline float getInterpolated(float k, float k0, float k1, const float &v0, const float &v1, std::vector<ofEaseFunction> ease) {
 			float h0 = v0, h1 = v1;
 			if(h1 < h0) h1 += ColorType::limit();
-			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, {ease[0]}), 0, ColorType::limit());
+			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, utils::makeVectorFor<Numeric<float>>(ease[0])), 0, ColorType::limit());
 		}
 	};
 	template<typename ColorType>
@@ -59,7 +60,7 @@ namespace ofx { namespace tweentype { namespace interpolate {
 		static inline float getInterpolated(float k, float k0, float k1, const float &v0, const float &v1, std::vector<ofEaseFunction> ease) {
 			float h0 = v0, h1 = v1;
 			if(h0 < h1) h0 += ColorType::limit();
-			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, {ease[0]}), 0, ColorType::limit());
+			return ofWrap(Numeric<float>::getInterpolated(k, k0, k1, h0, h1, utils::makeVectorFor<Numeric<float>>(ease[0])), 0, ColorType::limit());
 		}
 	};
 	

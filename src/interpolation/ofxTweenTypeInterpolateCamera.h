@@ -2,6 +2,7 @@
 
 #include "ofxTweenTypeInterpolateArithmetic.h"
 #include "ofxTweenTypeInterpolateNode.h"
+#include "ofxKeyframeTweenUtils.h"
 
 namespace ofx { namespace tweentype { namespace interpolate {
 
@@ -15,12 +16,12 @@ namespace ofx { namespace tweentype { namespace interpolate {
 				ret.setPosition(node.getPosition());
 				ret.setOrientation(node.getOrientationQuat());
 				ret.setScale(node.getScale());
-				ret.setFov(Numeric<float>::getInterpolated(k, k0, k1, v0.getFov(), v1.getFov(), {ease[NodeIP::dim()+0]}));
-				ret.setAspectRatio(Numeric<float>::getInterpolated(k, k0, k1, v0.getAspectRatio(), v1.getAspectRatio(), {ease[NodeIP::dim()+1]}));
-				ret.setLensOffset(Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.getLensOffset(), v1.getLensOffset(), {ease[NodeIP::dim()+2],ease[NodeIP::dim()+2]}));
-				ret.setNearClip(Numeric<float>::getInterpolated(k, k0, k1, v0.getNearClip(), v1.getNearClip(), {ease[NodeIP::dim()+3]}));
-				ret.setFarClip(Numeric<float>::getInterpolated(k, k0, k1, v0.getFarClip(), v1.getFarClip(), {ease[NodeIP::dim()+4]}));
-				Numeric<bool>::getInterpolated(k, k0, k1, v0.getOrtho(), v1.getOrtho(), {ease[NodeIP::dim()+5]}) ? ret.enableOrtho() : ret.disableOrtho();
+				ret.setFov(Numeric<float>::getInterpolated(k, k0, k1, v0.getFov(), v1.getFov(), utils::makeVectorFor<Numeric<float>>(ease[NodeIP::dim()+0])));
+				ret.setAspectRatio(Numeric<float>::getInterpolated(k, k0, k1, v0.getAspectRatio(), v1.getAspectRatio(), utils::makeVectorFor<Numeric<float>>(ease[NodeIP::dim()+1])));
+				ret.setLensOffset(Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.getLensOffset(), v1.getLensOffset(), utils::makeVectorFor<Numeric<ofVec2f>>(ease[NodeIP::dim()+2])));
+				ret.setNearClip(Numeric<float>::getInterpolated(k, k0, k1, v0.getNearClip(), v1.getNearClip(), utils::makeVectorFor<Numeric<float>>(ease[NodeIP::dim()+3])));
+				ret.setFarClip(Numeric<float>::getInterpolated(k, k0, k1, v0.getFarClip(), v1.getFarClip(), utils::makeVectorFor<Numeric<float>>(ease[NodeIP::dim()+4])));
+				Numeric<bool>::getInterpolated(k, k0, k1, v0.getOrtho(), v1.getOrtho(), utils::makeVectorFor<Numeric<bool>>(ease[NodeIP::dim()+5])) ? ret.enableOrtho() : ret.disableOrtho();
 				return ret;
 			}
 		};
@@ -61,12 +62,12 @@ namespace ofx { namespace tweentype { namespace interpolate {
 			static int dim() { return node::Orbit::dim()+6; }
 			static inline Orbit getInterpolated(float k, float k0, float k1, const Orbit &v0, const Orbit &v1, std::vector<ofEaseFunction> ease) {
 				Orbit ret = node::Orbit::getInterpolated(k, k0, k1, v0, v1, ease);
-				ret.fov = Numeric<float>::getInterpolated(k, k0, k1, v0.fov, v1.fov, {ease[node::Orbit::dim()+0]});
-				ret.aspect_ratio = Numeric<float>::getInterpolated(k, k0, k1, v0.aspect_ratio, v1.aspect_ratio, {ease[node::Orbit::dim()+1]});
-				ret.lens_offset = Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.lens_offset, v1.lens_offset, {ease[node::Orbit::dim()+2],ease[node::Orbit::dim()+2]});
-				ret.near_clip = Numeric<float>::getInterpolated(k, k0, k1, v0.near_clip, v1.near_clip, {ease[node::Orbit::dim()+3]});
-				ret.far_clip = Numeric<float>::getInterpolated(k, k0, k1, v0.far_clip, v1.far_clip, {ease[node::Orbit::dim()+4]});
-				ret.is_ortho = Numeric<bool>::getInterpolated(k, k0, k1, v0.is_ortho, v1.is_ortho, {ease[node::Orbit::dim()+5]});
+				ret.fov = Numeric<float>::getInterpolated(k, k0, k1, v0.fov, v1.fov, utils::makeVectorFor<Numeric<float>>(ease[node::Orbit::dim()+0]));
+				ret.aspect_ratio = Numeric<float>::getInterpolated(k, k0, k1, v0.aspect_ratio, v1.aspect_ratio, utils::makeVectorFor<Numeric<float>>(ease[node::Orbit::dim()+1]));
+				ret.lens_offset = Numeric<ofVec2f>::getInterpolated(k, k0, k1, v0.lens_offset, v1.lens_offset, utils::makeVectorFor<Numeric<ofVec2f>>(ease[node::Orbit::dim()+2]));
+				ret.near_clip = Numeric<float>::getInterpolated(k, k0, k1, v0.near_clip, v1.near_clip, utils::makeVectorFor<Numeric<float>>(ease[node::Orbit::dim()+3]));
+				ret.far_clip = Numeric<float>::getInterpolated(k, k0, k1, v0.far_clip, v1.far_clip, utils::makeVectorFor<Numeric<float>>(ease[node::Orbit::dim()+4]));
+				ret.is_ortho = Numeric<bool>::getInterpolated(k, k0, k1, v0.is_ortho, v1.is_ortho, utils::makeVectorFor<Numeric<bool>>(ease[node::Orbit::dim()+5]));
 				return ret;
 			}
 		};

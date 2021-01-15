@@ -9,7 +9,7 @@ namespace ofx { namespace tweentype { namespace interpolate {
 	namespace camera {
 		template<typename NodeIP>
 		struct Node {
-			static inline int dim() { return NodeIP::dim()+5; }
+			static inline int dim() { return NodeIP::dim()+6; }
 			static inline ofCamera getInterpolated(float k, float k0, float k1, const ofCamera &v0, const ofCamera &v1, std::vector<ofEaseFunction> ease) {
 				ofNode node = NodeIP::getInterpolated(k, k0, k1, v0, v1, ease);
 				ofCamera ret;
